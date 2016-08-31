@@ -46,6 +46,19 @@ in `spec_helper.rb`:
     c.include Rspec::Shell::Expectations
   end
 ```
+A shared example can be helpful for setting up and tearing down the stubbed environment
+
+```ruby
+shared_examples 'for creating a stubbed environment (@stubbed_env)' do
+  before(:all) do
+    @stubbed_env = create_stubbed_env
+  end
+
+  after(:all) do
+    @stubbed_env.cleanup
+  end
+end
+```
 
 ## Usage
 
