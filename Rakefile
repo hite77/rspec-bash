@@ -7,7 +7,4 @@ RSpec::Core::RakeTask.new(:spec) do |t|
   t.rspec_opts << ' --color'
 end
 
-require 'rubocop/rake_task'
-RuboCop::RakeTask.new
-
-task default: [:rubocop, :spec]
+task default: [:spec]
