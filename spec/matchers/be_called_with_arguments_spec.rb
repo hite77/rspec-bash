@@ -32,15 +32,17 @@ describe 'be_called_with_arguments' do
         begin
           expect(@command).to be_called_with_arguments('not_first_argument', 'second_argument')
         rescue RSpec::Expectations::ExpectationNotMetError => rex
-          error_string = <<-multiline_string
-expected stubbed_command to be called with arguments ["not_first_argument", "second_argument"]
-Diff:
-@@ -1,2 +1,3 @@
--["not_first_argument", "second_argument"]
-+["first_argument", "second_argument"]
-+["third_argument", "fourth_argument"]
+          expected_error_string = <<-multiline_string
+Expected stubbed_command to be called with arguments ["not_first_argument", "second_argument"]
+
+Expected Calls:
+stubbed_command not_first_argument second_argument
+
+Actual Calls:
+stubbed_command first_argument second_argument
+stubbed_command third_argument fourth_argument
 multiline_string
-          expect(rex.message.uncolorize).to eql error_string
+          expect(rex.message.uncolorize).to eql expected_error_string
         end
       end
 
@@ -48,13 +50,8 @@ multiline_string
         begin
           expect(@command).to_not be_called_with_arguments('first_argument', 'second_argument')
         rescue RSpec::Expectations::ExpectationNotMetError => rex
-          expected_error_string = <<-multiline_string
-expected stubbed_command not to be called with arguments ["first_argument", "second_argument"]
-Diff:
-@@ -1,2 +1,3 @@
- ["first_argument", "second_argument"]
-+["third_argument", "fourth_argument"]
-multiline_string
+          expected_error_string = 'Expected stubbed_command not to be ' \
+            'called with arguments ["first_argument", "second_argument"]'
           expect(rex.message.uncolorize).to eql expected_error_string
         end
       end
