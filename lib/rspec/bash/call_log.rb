@@ -30,6 +30,10 @@ module Rspec
         !call_log_list.empty? && call_log_list.first['args'].nil?
       end
 
+      def call_log_arguments
+        load_call_log_list.map { |call_log| call_log['args'] || [] }.compact
+      end
+
       private
 
       def find_call(*args)
@@ -43,10 +47,6 @@ module Rspec
         argument_list.map do |argument_series|
           start_position ? argument_series[start_position, range_length] : argument_series
         end
-      end
-
-      def call_log_arguments
-        load_call_log_list.map { |call_log| call_log['args'] || [] }.compact
       end
 
       def argument_series_contains?(actual_argument_series, expected_argument_series)

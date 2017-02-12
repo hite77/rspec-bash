@@ -37,6 +37,10 @@ module Rspec
         @call_log.call_count(*arg)
       end
 
+      def command
+        @call_configuration.command
+      end
+
       def returns_exitstatus(statuscode)
         @call_configuration.set_exitcode(statuscode, @arguments)
         @call_configuration.write
@@ -54,12 +58,7 @@ module Rspec
       end
 
       def inspect
-        if @arguments.any?
-          "<Stubbed #{@call_configuration.command.inspect} " \
-            "args: #{@arguments.join(' ').inspect}>"
-        else
-          "<Stubbed #{@call_configuration.command.inspect}>"
-        end
+        call_log.call_log_arguments.map(&:inspect).join("\n")
       end
 
       private
