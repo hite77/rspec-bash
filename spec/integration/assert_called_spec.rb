@@ -8,7 +8,6 @@ describe 'Assert called' do
   let(:script) do
     <<-SCRIPT
       first_command "foo bar"
-      first_command "hoo bar" "goo tar"
     SCRIPT
   end
   let(:script_path) { Pathname.new '/tmp/test_script.sh' }
@@ -39,8 +38,9 @@ describe 'Assert called' do
 
     describe 'assertion message' do
       it 'provides a helpful message' do
-        expect(first_command.inspect).to eql "[\"foo bar\"]\n" \
-          '["hoo bar", "goo tar"]'
+        expect(first_command.inspect).to eql '<Stubbed "first_command">'
+        expect(first_command.with_args('foo bar').inspect).to \
+          eql '<Stubbed "first_command" args: "foo bar">'
       end
     end
   end

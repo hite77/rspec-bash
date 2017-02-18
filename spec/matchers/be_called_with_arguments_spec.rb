@@ -42,7 +42,7 @@ Actual Calls:
 stubbed_command first_argument second_argument
 stubbed_command third_argument fourth_argument
 multiline_string
-          expect(rex.message.uncolorize).to eql expected_error_string
+          expect(rex.message).to eql expected_error_string
         end
       end
 
@@ -52,7 +52,7 @@ multiline_string
         rescue RSpec::Expectations::ExpectationNotMetError => rex
           expected_error_string = 'Expected stubbed_command not to be ' \
             'called with arguments ["first_argument", "second_argument"]'
-          expect(rex.message.uncolorize).to eql expected_error_string
+          expect(rex.message).to eql expected_error_string
         end
       end
     end
